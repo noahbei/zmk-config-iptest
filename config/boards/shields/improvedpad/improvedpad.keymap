@@ -3,7 +3,7 @@
 #include <dt-bindings/zmk/bt.h>
 
 #define DEFAULT 0
-#define BTL 1
+#define BTLY 1
 
 / {
     keymap {
@@ -16,7 +16,7 @@
         // |    I    |    Z    |    J    |    K
         // -------------------------------------------------------------------------------------------------------------------------
             bindings = <
-                &kp A    &kp B    &kp C    &kp D     &kp X     &mo 1
+                &kp A    &kp B    &kp C    &kp D     &kp X     &mo BTLY
                 &kp E    &kp F    &kp G    &kp H
                 &kp I    &kp Z    &kp J    &kp K
             >;
