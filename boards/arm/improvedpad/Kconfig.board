@@ -1,0 +1,5 @@
+# Improvedpad board configuration
+
+config BOARD_IMPROVEDPAD
+    bool "Improved Pad Keyboard"
+    depends on SOC_NRF52833_QFAA

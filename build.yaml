@@ -18,5 +18,5 @@
 #
 ---
 include:
-  - board: nrfmicro_13_52833
+  - board: Improvedpad
     shield: improvedpad
