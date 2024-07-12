@@ -40,7 +40,7 @@
          a-gpios = <&expander 12 GPIO_PULL_UP>;
          b-gpios = <&expander 13 GPIO_PULL_UP>;
          steps = <80>;
-         status = "enabled";
+         status = "okay";
      };
  
      sensors: sensors {
@@ -49,11 +49,11 @@
          triggers-per-rotation = <20>;
      };
  
- zephyr_udc0: &usb {
-     pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
-     pinctrl-names = "default";
-     status = "okay";
- };
+    zephyr_udc0: &usb {
+        pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+        pinctrl-names = "default";
+        status = "okay";
+    };
  
 //  &clk_hse {
 //      status = "okay";
