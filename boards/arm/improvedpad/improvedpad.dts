@@ -5,7 +5,7 @@
  
  / {
      model = "Improvedpad, v1";
-     compatible = "improvedpad,v1", "st,stm32f303";
+     compatible = "improvedpad,v1";
  
      chosen {
          zephyr,sram = &sram0;
@@ -20,21 +20,41 @@
 
         diode-direction = "col2row";
         row-gpios
-            = <&expander 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&expander 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&expander 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&expander 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             , <&expander 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
         col-gpios
-            = <&expander 9 GPIO_ACTIVE_HIGH>
-            , <&expander 10 GPIO_ACTIVE_HIGH>
-            , <&expander 11 GPIO_ACTIVE_HIGH>
+            = <&expander 0 GPIO_ACTIVE_HIGH>
+            , <&expander 1 GPIO_ACTIVE_HIGH>
             , <&expander 2 GPIO_ACTIVE_HIGH>
-            , <&expander 23 GPIO_ACTIVE_HIGH>
-            , <&expander 24 GPIO_ACTIVE_HIGH>
+            , <&expander 3 GPIO_ACTIVE_HIGH>
+            , <&expander 11 GPIO_ACTIVE_HIGH>
+            , <&expander 8 GPIO_ACTIVE_HIGH>
             ;
     };
  
+    expander: mcp23s17@20 {
+        compatible = "microchip,mcp23s17";
+        reg = <0x20>;
+        spi-max-frequency = <1000000>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        #ngpios = <16>;
+        // maybe only available with microchip,mcp23sxx
+        // reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    &spi1 {
+        status = "okay";
+        sck-pin = <17>;
+        mosi-pin = <14>;
+        miso-pin = <15>;
+        cs-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+    };
+
      encoder: encoder {
          compatible = "alps,ec11";
          a-gpios = <&expander 12 GPIO_PULL_UP>;
