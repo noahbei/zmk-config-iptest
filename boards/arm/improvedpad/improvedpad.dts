@@ -1,8 +1,8 @@
-#include <nordic/nrf52833_qdaa.dtsi>
 /dts-v1/;
- 
+#include <nordic/nrf52833_qdaa.dtsi>
+
  / {
-     model = "Improvedpad, v1";
+     model = "improvedpad";
      compatible = "improvedpad,v1";
  
      chosen {
@@ -10,7 +10,7 @@
          zephyr,flash = &flash0;
          zmk,kscan = &kscan0;
      };
- 
+  
      kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
@@ -30,36 +30,6 @@
             ;
     };
  
-    expander: mcp23s17@20 {
-        compatible = "microchip,mcp23s17";
-        reg = <0x20>;
-        spi-max-frequency = <1000000>;
-        gpio-controller;
-        #gpio-cells = <2>;
-        #ngpios = <16>;
-        // maybe only available with microchip,mcp23sxx
-        // reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
-        status = "okay";
-    };
-
-    &spi1 {
-        status = "okay";
-        // sck-pin = <17>;
-        // mosi-pin = <14>;
-        // miso-pin = <15>;
-        // cs-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
-        compatible = "nordic,nrf-spim";
-        pinctrl-0 = <&spi1_default>;
-        pinctrl-1 = <&spi1_sleep>;
-        pinctrl-names = "default", "sleep";
-    };
-
-    zephyr_udc0: &usb {
-       // pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
-        pinctrl-names = "default";
-        status = "okay";
-    };
-
     &gpiote {
         status = "okay";
     };
@@ -69,6 +39,40 @@
     };
     
     &gpio1 {
+        status = "okay";
+    };
+
+    &spi1 {
+        status = "okay";
+        compatible = "nordic,nrf-spim";
+        pinctrl-0 = <&spi1_default>;
+        pinctrl-1 = <&spi1_sleep>;
+        pinctrl-names = "default", "sleep";
+
+        expander: mcp23s17@0 {
+            status = "okay";
+            compatible = "microchip,mcp23s17";
+            reg = <0>;
+            spi-max-frequency = <800000>;
+            gpio-controller;
+            #gpio-cells = <2>;
+            #ngpios = <16>;
+            // maybe only available with microchip,mcp23sxx
+            // reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+        };
+    };
+
+    &uart0 {
+        compatible = "nordic,nrf-uarte";
+        current-speed = <115200>;
+        pinctrl-0 = <&uart0_default>;
+        pinctrl-1 = <&uart0_sleep>;
+        pinctrl-names = "default", "sleep";
+    };
+
+    zephyr_udc0: &usb {
+       // pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+        pinctrl-names = "default";
         status = "okay";
     };
     
