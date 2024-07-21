@@ -11,4 +11,17 @@ config ZMK_KEYBOARD_NAME
 config ZMK_KSCAN_MATRIX_POLLING
     default y
 
+if USB_DEVICE_STACK
+
+config USB_NRFX
+    default y
+
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+    default BT
+
+config BOARD_NRFMICRO_CHARGER
+    default y
+
 endif # BOARD_IMPROVEDPAD
