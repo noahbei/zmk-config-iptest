@@ -58,7 +58,7 @@
             spi-max-frequency = <800000>;
             gpio-controller;
             #gpio-cells = <2>;
-            #ngpios = <16>;
+            ngpios = <16>;
             // maybe only available with microchip,mcp23sxx
             // reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
         };
