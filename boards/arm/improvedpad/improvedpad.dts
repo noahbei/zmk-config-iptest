@@ -1,5 +1,6 @@
 /dts-v1/;
 #include <nordic/nrf52833_qdaa.dtsi>
+#include "pinctrl.dtsi"
 
  / {
      model = "improvedpad";
@@ -63,13 +64,13 @@
         };
     };
 
-    // &uart0 {
-    //     compatible = "nordic,nrf-uarte";
-    //     current-speed = <115200>;
-    //     pinctrl-0 = <&uart0_default>;
-    //     pinctrl-1 = <&uart0_sleep>;
-    //     pinctrl-names = "default", "sleep";
-    // };
+    &uart0 {
+        compatible = "nordic,nrf-uarte";
+        current-speed = <115200>;
+        pinctrl-0 = <&uart0_default>;
+        pinctrl-1 = <&uart0_sleep>;
+        pinctrl-names = "default", "sleep";
+    };
 
     zephyr_udc0: &usbd {
        // pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
