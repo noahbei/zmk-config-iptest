@@ -19,4 +19,4 @@
 ---
 include:
   - board: improvedpad
-  - shield: eek
+    shield: eek
