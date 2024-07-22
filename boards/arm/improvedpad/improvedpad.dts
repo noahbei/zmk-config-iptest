@@ -1,113 +1,122 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 /dts-v1/;
- #include <st/f3/stm32f303Xc.dtsi>
- #include <st/f3/stm32f303c(b-c)tx-pinctrl.dtsi>
- #include <dt-bindings/zmk/matrix_transform.h>
- 
- / {
-     model = "Improvedpad, v1";
-     compatible = "improvedpad,v1";
- 
-     chosen {
-         zephyr,sram = &sram0;
-         zephyr,flash = &flash0;
-         zmk,kscan = &kscan0;
-         zmk,matrix-transform = &default_transform;
-     };
- 
-     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
-        wakeup-source;
+#include <nordic/nrf52833_qdaa.dtsi>
+#include "arduino_pro_micro_pins_52833.dtsi"
+#include "nrfmicro-pinctrl.dtsi"
 
-        diode-direction = "col2row";
-        row-gpios
-            = <&expander 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            ;
-        col-gpios
-            = <&expander 0 GPIO_ACTIVE_HIGH>
-            , <&expander 1 GPIO_ACTIVE_HIGH>
-            , <&expander 2 GPIO_ACTIVE_HIGH>
-            , <&expander 3 GPIO_ACTIVE_HIGH>
-            , <&expander 11 GPIO_ACTIVE_HIGH>
-            , <&expander 8 GPIO_ACTIVE_HIGH>
-            ;
-    };
- 
-    expander: mcp23s17@20 {
-        compatible = "microchip,mcp23s17";
-        reg = <0x20>;
-        spi-max-frequency = <1000000>;
-        gpio-controller;
-        #gpio-cells = <2>;
-        #ngpios = <16>;
-        // maybe only available with microchip,mcp23sxx
-        // reset-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
-        status = "okay";
+/ {
+    model = "improvedpad";
+    compatible = "joric,nrfmicro";
+
+    chosen {
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zmk,battery = &vbatt;
     };
 
-    &spi1 {
-        status = "okay";
-        sck-pin = <17>;
-        mosi-pin = <14>;
-        miso-pin = <15>;
-        cs-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+    leds {
+        compatible = "gpio-leds";
+        blue_led: led_0 {
+            gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
+        };
     };
 
-     encoder: encoder {
-         compatible = "alps,ec11";
-         a-gpios = <&expander 12 GPIO_PULL_UP>;
-         b-gpios = <&expander 13 GPIO_PULL_UP>;
-         steps = <80>;
-         status = "okay";
-     };
- 
-     sensors: sensors {
-         compatible = "zmk,keymap-sensors";
-         sensors = <&encoder>;
-         triggers-per-rotation = <20>;
-     };
- 
-    zephyr_udc0: &usb {
-        pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
-        pinctrl-names = "default";
-        status = "okay";
+    // Node name must match original "EXT_POWER" label to preserve user settings.
+    EXT_POWER {
+        compatible = "zmk,ext-power-generic";
+        control-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+        init-delay-ms = <50>;
     };
- 
-//  &clk_hse {
-//      status = "okay";
-//      clock-frequency = <DT_FREQ_M(8)>;
-//  };
- 
-//  &pll {
-//      prediv = <1>;
-//      mul = <9>;
-//      clocks = <&clk_hse>;
-//      status = "okay";
-//  };
- 
-//  &rcc {
-//      clocks = <&pll>;
-//      clock-frequency = <DT_FREQ_M(72)>;
-//      ahb-prescaler = <1>;
-//      apb1-prescaler = <2>;
-//      apb2-prescaler = <1>;
-//  };
- 
-//  &flash0 {
-//      /*
-//       * For more information, see:
-//       * http://docs.zephyrproject.org/latest/guides/dts/index.html#flash-partitions
-//       */
-//      partitions {
-//          compatible = "fixed-partitions";
-//          #address-cells = <1>;
-//          #size-cells = <1>;
- 
-//          /* Set 6Kb of storage at the end of the 256Kb of flash */
-//          storage_partition: partition@3e800 {
-//              reg = <0x0003e800 0x00001800>;
-//          };
-//      };
-//  };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-voltage-divider";
+        io-channels = <&adc 2>;
+        output-ohms = <2000000>;
+        full-ohms = <(2000000 + 820000)>;
+    };
+};
+
+&adc {
+    status = "okay";
+};
+
+&gpiote {
+    status = "okay";
+};
+
+&gpio0 {
+    status = "okay";
+};
+
+&gpio1 {
+    status = "okay";
+};
+
+&i2c0 {
+    compatible = "nordic,nrf-twi";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&spi1 {
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi1_default>;
+    pinctrl-1 = <&spi1_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+&uart0 {
+    compatible = "nordic,nrf-uarte";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart0_default>;
+    pinctrl-1 = <&uart0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+zephyr_udc0: &usbd {
+    status = "okay";
+};
+
+
+&flash0 {
+    /*
+     * For more information, see:
+     * http://docs.zephyrproject.org/latest/devices/dts/flash_partitions.html
+     */
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        sd_partition: partition@0 {
+            reg = <0x00000000 0x00026000>;
+        };
+        code_partition: partition@26000 {
+            reg = <0x00026000 0x00046000>;
+        };
+
+        /*
+         * The flash starting at 0x0006c000 and ending at
+         * 0x00073fff is reserved for use by the application.
+         */
+
+        /*
+         * Storage partition will be used by FCB/LittleFS/NVS
+         * if enabled.
+         */
+        storage_partition: partition@6c000 {
+            reg = <0x0006c000 0x00008000>;
+        };
+
+        boot_partition: partition@74000 {
+            reg = <0x00074000 0x0000c000>;
+        };
+    };
+};

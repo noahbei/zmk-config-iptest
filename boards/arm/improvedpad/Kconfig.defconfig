@@ -1,14 +1,28 @@
-# Planck keyboard configuration
+# Electronut Labs Papyr board configuration
 
 # Copyright (c) 2020 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-if BOARD_IMPROVEDPAD
+if BOARD_NRFMICRO_11 || BOARD_NRFMICRO_11_FLIPPED || BOARD_NRFMICRO_13 || BOARD_IMPROVEDPAD
 
-config ZMK_KEYBOARD_NAME
-    default "Improved Pad"
+config BOARD
+    default "improvedpad"
 
-config ZMK_KSCAN_MATRIX_POLLING
+if USB_DEVICE_STACK
+
+config USB_NRFX
     default y
 
-endif # BOARD_IMPROVEDPAD
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+    default BT
+
+if BOARD_NRFMICRO_13 || BOARD_IMPROVEDPAD
+
+config BOARD_NRFMICRO_CHARGER
+    default y
+
+endif # BOARD_NRFMICRO_13 || BOARD_NRFMICRO_13_52833
+
+endif # BOARD_NRFMICRO_11 || BOARD_NRFMICRO_11_FLIPPED || BOARD_NRFMICRO_13 || BOARD_NRFMICRO_13_52833
