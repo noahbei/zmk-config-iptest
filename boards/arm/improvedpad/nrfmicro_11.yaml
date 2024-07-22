@@ -1,5 +1,5 @@
-identifier: improvedpad
-name: improvedpad
+identifier: nrfmicro_11
+name: nrfmicro_11
 type: mcu
 arch: arm
 toolchain:
