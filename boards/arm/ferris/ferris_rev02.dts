@@ -91,6 +91,17 @@
         , <&right_io 11 (GPIO_ACTIVE_LOW)>
         ;
     };
+
+    spi1_pins: spi1_pins {
+        pinmux = <
+            STM32_PINMUX('A', 5, AF0_SPI1)  // SCK on PA5
+            STM32_PINMUX('A', 6, AF0_SPI1)  // MISO on PA6
+            STM32_PINMUX('A', 7, AF0_SPI1)  // MOSI on PA7
+        >;
+        bias-disable;
+        drive-push-pull;
+        slew-rate = <1>;
+    };
 };
 
 &i2c2 {
@@ -103,7 +114,7 @@
 
 &spi1 {
     status = "okay";
-    pinctrl-0 = <&spi1_sck_pin &spi1_miso_pin &spi1_mosi_pin>;
+    pinctrl-0 = <&spi1_pins>;
     pinctrl-names = "default";
         right_io: mcp23s17@0 {
         compatible = "microchip,mcp230xx";
@@ -113,18 +124,6 @@
         #gpio-cells = <2>;
         ngpios = <16>;
     };
-};
-
-spi1_sck_pin {
-    pinmux = <STM32_PINMUX('A', 5, AF0)>; // SCK on PA5
-};
-
-spi1_miso_pin {
-    pinmux = <STM32_PINMUX('A', 6, AF0)>; // MISO on PA6
-};
-
-spi1_mosi_pin {
-    pinmux = <STM32_PINMUX('A', 7, AF0)>; // MOSI on PA7
 };
 
 zephyr_udc0: &usb {
