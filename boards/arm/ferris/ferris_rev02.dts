@@ -111,7 +111,7 @@
         #gpio-cells = <2>;
         ngpios = <16>;
     };
-}
+};
 
 zephyr_udc0: &usb {
     status = "okay";
