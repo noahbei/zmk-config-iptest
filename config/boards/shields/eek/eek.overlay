@@ -1,5 +1,5 @@
 #include <nordic/nrf52833_qdaa.dtsi>
-#include "improvedpad.dtsi"
+//#include "improvedpad.dtsi"
 / {
     chosen {
         zmk,kscan = &kscan0;
