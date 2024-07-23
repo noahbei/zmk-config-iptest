@@ -94,9 +94,9 @@
 
     spi1_pins: spi1_pins {
         pinmux = <
-            STM32_PINMUX('A', 5, AF0_SPI1)  // SCK on PA5
-            STM32_PINMUX('A', 6, AF0_SPI1)  // MISO on PA6
-            STM32_PINMUX('A', 7, AF0_SPI1)  // MOSI on PA7
+            STM32_PINMUX('A', 5, AF0_SPI1)
+            STM32_PINMUX('A', 6, AF0_SPI1)
+            STM32_PINMUX('A', 7, AF0_SPI1)
         >;
         bias-disable;
         drive-push-pull;
