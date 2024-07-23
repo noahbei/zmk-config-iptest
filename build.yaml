@@ -18,5 +18,6 @@
 #
 ---
 include:
-  - board: improvedpad
-    shield: eek
+  # - board: improvedpad
+  #   shield: eek
+    - board: ferris
