@@ -103,7 +103,9 @@
 
 &spi1 {
     status = "okay";
-    right_io: mcp23s17@0 {
+    pinctrl-0 = <&spi1_sck_pin &spi1_miso_pin &spi1_mosi_pin>;
+    pinctrl-names = "default";
+        right_io: mcp23s17@0 {
         compatible = "microchip,mcp230xx";
         status = "okay";
         gpio-controller;
@@ -111,6 +113,18 @@
         #gpio-cells = <2>;
         ngpios = <16>;
     };
+};
+
+&spi1_sck_pin {
+    pinmux = <STM32_PINMUX('A', 5, AF0)>; // SCK on PA5
+};
+
+&spi1_miso_pin {
+    pinmux = <STM32_PINMUX('A', 6, AF0)>; // MISO on PA6
+};
+
+&spi1_mosi_pin {
+    pinmux = <STM32_PINMUX('A', 7, AF0)>; // MOSI on PA7
 };
 
 zephyr_udc0: &usb {
