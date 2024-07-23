@@ -20,4 +20,4 @@
 include:
   # - board: improvedpad
   #   shield: eek
-    - board: ferris
+    - board: ferris_rev02
