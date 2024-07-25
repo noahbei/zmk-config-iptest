@@ -22,22 +22,11 @@
     };
 
     kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-matrix";
-        diode-direction = "col2row";
+        compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
 
-        col-gpios
-            = <&expander 7 GPIO_ACTIVE_HIGH>
-            , <&expander 6 GPIO_ACTIVE_HIGH>
-            , <&expander 5 GPIO_ACTIVE_HIGH>
-            , <&expander 4 GPIO_ACTIVE_HIGH>
-            ;
-
-        row-gpios
-            = <&expander 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&expander 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        input-gpios
+            = <&gpio0 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
     };
 
