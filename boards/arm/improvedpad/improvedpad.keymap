@@ -17,24 +17,7 @@
         // |    I    |    Z    |    J    |    K
         // -------------------------------------------------------------------------------------------------------------------------
             bindings = <
-                &kp A    &kp B    &kp C    &kp D
-                &kp E    &kp F    &kp G    &kp H
-                &kp I    &kp Z    &kp J    &kp K
-                &kp X    &mo BTLY &kp J    &kp K
-            >;
-        };
-
-        bt_layer {
-        // -------------------------------------------------------------------------------------------------------------------------
-        // |    SEL0    |    SEL1    |    SEL2    |    SEL3    |    BOOT    |    Y    |
-        // |    SEL4    |    DC0     |    DC1     |    DC2
-        // |    DC3     |    DC4     |    CLRALL  |    CLR
-        // -------------------------------------------------------------------------------------------------------------------------
-            bindings = <
-                &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3
-                &bt BT_SEL 4    &bt BT_DISC 0   &bt BT_DISC 1    &bt BT_DISC 2
-                &bt BT_DISC 3    &bt BT_DISC 4     &bt BT_CLR_ALL    &bt BT_CLR
-                &kp I    &kp Z    &kp J    &kp K
+                &kp A
             >;
         };
     };
