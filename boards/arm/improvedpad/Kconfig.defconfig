@@ -13,6 +13,9 @@ endif # USB_DEVICE_STACK
 config BT_CTLR
     default BT
 
+config MAX17048
+	default y
+
 config BOARD_NRFMICRO_CHARGER
     default y
 
